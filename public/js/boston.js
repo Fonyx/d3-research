@@ -2,7 +2,7 @@ var width = 1000, height = 500, margin = 30;
 
 var marginWidth = width-margin;
 var marginHeight = height-margin;
-var dotSize = [2, 10]
+var dotSize = [2, 25]
 
 var xMinMax, yMinMax, rMinMax;
 var xScale, yScale, rScale;
@@ -29,11 +29,11 @@ var data = d3.json('http://localhost:3000/api/boston')
 
         xScale = d3.scaleLinear()
             .domain([xMinMax[0], xMinMax[1]])
-            .range([margin+dotSize[1], marginWidth-dotSize[1]]);
+            .range([margin+dotSize[1]+1, marginWidth-dotSize[1]-1]);
 
         yScale = d3.scaleLinear()
             .domain([yMinMax[1], yMinMax[0]])
-            .range([margin+dotSize[1], marginHeight-dotSize[1]]);
+            .range([margin+dotSize[1]+1, marginHeight-dotSize[1]-1]);
 
         rScale = d3.scaleLinear()
             .domain([rMinMax[0], rMinMax[1]])
