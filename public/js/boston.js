@@ -2,7 +2,7 @@ var width = 1000, height = 500, margin = 30;
 
 var marginWidth = width-margin;
 var marginHeight = height-margin;
-var minDotSize = 2, maxDotSize = 15;
+var dotSize = [2, 10]
 
 var xMinMax, yMinMax, rMinMax;
 var xScale, yScale, rScale;
@@ -20,58 +20,24 @@ function getExtentRange(data, label){
     return minMax
 }
 
-/**
- * collect a linear scale in the horizontal plane for the extent of the data given a specific label
- * @param {[list{object}]} data 
- * @param {'String'} label 
- */
-function getHorizontalScale(data, label, minMax){
-
-    let scale = d3.scaleLinear()
-        .domain([minMax[0], minMax[1]])
-        .range([margin, marginWidth]);
-
-    return scale;
-}
-
-/**
- * collect a linear scale in the vertical plane for the extent of the data given a specific label
- * @param {[list{object}]} data 
- * @param {'String'} label 
- */
-function getVerticalScale(data, label, minMax){
-
-    let scale = d3.scaleLinear()
-        .domain([minMax[1], minMax[0]])
-        .range([margin, marginHeight]);
-
-    return scale;
-}
-
-/**
- * collect a square root scale in the size dimension for the extent of the data given a specific label
- * @param {[list{object}]} data 
- * @param {'String'} label 
- */
-function getSizeScale(data, label, minMax){
-
-    let scale = d3.scaleSqrt()
-        .domain([minMax[0], minMax[1]])
-        .range([minDotSize, maxDotSize]);
-
-    return scale;
-}
-
-
 var data = d3.json('http://localhost:3000/api/boston')
     .then((data)=>{
 
         xMinMax = getExtentRange(data, 'poor');
         yMinMax = getExtentRange(data, 'rooms');
         rMinMax = getExtentRange(data, 'value');
-        xScale = getHorizontalScale(data, 'poor', xMinMax);
-        yScale = getVerticalScale(data, 'rooms', yMinMax);
-        rScale = getSizeScale(data, 'value', rMinMax);
+
+        xScale = d3.scaleLinear()
+            .domain([xMinMax[0], xMinMax[1]])
+            .range([margin+dotSize[1], marginWidth-dotSize[1]]);
+
+        yScale = d3.scaleLinear()
+            .domain([yMinMax[1], yMinMax[0]])
+            .range([margin+dotSize[1], marginHeight-dotSize[1]]);
+
+        rScale = d3.scaleLinear()
+            .domain([rMinMax[0], rMinMax[1]])
+            .range([dotSize[0], dotSize[1]]);
 
         // sort by charles value
         data = data.sort(function(a, b){
@@ -111,6 +77,6 @@ var data = d3.json('http://localhost:3000/api/boston')
         .attr('class', 'axis');
 
         yAxisG.call(yAxis)
-            .attr('transform', 'translate('+marginWidth+', 0)');
+            .attr('transform', 'translate('+margin+', 0)');
     })
 
