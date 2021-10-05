@@ -7,23 +7,32 @@ var svg = d3.select('#chart')
     .attr('height', height + 'px');
 
 
-d3.csv('https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered_wide.csv').then(function(data){
-    console.log(data);
+// async function loadBoston(){
+//     let response = await fetch('http://localhost:3000/api/boston');
+//     let data = await response.json();
+//     return data
+// }
 
-    circles = svg.selectAll('.dot')
+// loadBoston();
+
+
+var data = d3.json('http://localhost:3000/api/boston')
+    .then((data)=>{
+        circles = svg.selectAll('.dot')
         .data(data)
         .enter()
         .append('circle')
         .attr('class', 'dot')
         .attr('cx',function(d){
-            return d.year / 30;
+            return parseFloat(d.poor);
         })
         .attr('cy',function(d){
-            return d.Amanda / 50;
+            return parseFloat(d.rooms) * 50;
         })
         .attr('r',function(d){
-            return d.year/200;
+            return parseFloat(d.value)/2;
         })
         .attr('fill','#000')
         .style('opacity', 0.5);
-});
+    })
+
