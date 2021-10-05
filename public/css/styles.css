@@ -12,7 +12,19 @@ body{
 svg{
     background-color: #fff;
 }
+
 .dot{
-    stroke: '#000';
+    stroke: black;
     stroke-width: 1px;
+    stroke-dasharray: "3,3";
+}
+
+.charles-dot{
+    fill: #FA7D97;
+    opacity: 0.5;
+}
+
+.non-charles-dot{
+    fill: #64D0FA;
+    opacity: 0.2;
 }
