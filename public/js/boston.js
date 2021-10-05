@@ -50,13 +50,9 @@ var data = d3.json('http://localhost:3000/api/boston')
             .data(data)
             .enter()
             .append('circle')
-            .attr('cx',function(d){
-                return xScale(d.poor);
-            })
-            .attr('cy',function(d){
-                return yScale(d.rooms);
-            })
             .attr('r',"0")
+            .attr('cx', 0)
+            .attr('cy', height)
             // change class assigned based on the charles boolean for fill rendering
             .attr('class', (d)=>{
                 return parseInt(d.charles) ? 'dot charles': 'dot non-charles';
@@ -85,11 +81,17 @@ var data = d3.json('http://localhost:3000/api/boston')
 function update(){
     dots.transition()
         .delay(function(d, i){
-            return i;
+            return i*3;
         })
         .attr("r", function(d){
             return rScale(d.value);
-        });
+        })
+        .attr("cx", function(d){
+            return xScale(d.poor);
+        })
+        .attr("cy", function(d){
+            return yScale(d.rooms);
+        })
 }
 
 
