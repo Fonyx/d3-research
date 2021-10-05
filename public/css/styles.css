@@ -19,12 +19,18 @@ svg{
     stroke-dasharray: "3,3";
 }
 
-.charles-dot{
+.charles{
     fill: #FA7D97;
-    opacity: 0.5;
+    opacity: 1;
 }
 
-.non-charles-dot{
+.non-charles{
     fill: #64D0FA;
     opacity: 0.2;
+}
+.axis line, .axis path{
+    stroke: #bbb
+}
+.axis text{
+    fill: #bbb
 }
